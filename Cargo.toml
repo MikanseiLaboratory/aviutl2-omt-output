@@ -1,0 +1,27 @@
+[package]
+name = "aviutl2-omt-output"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.97"
+license = "MIT"
+publish = false
+authors = ["MikanseiLaboratory"]
+description = "AviUtl2 plugin that live-sends the current scene over Open Media Transport"
+repository = "https://github.com/MikanseiLaboratory/aviutl2-omt-output"
+readme = "README.md"
+
+[lib]
+name = "aviutl2_omt_live_output"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+aviutl2 = { version = "=0.43.0", default-features = false, features = ["generic", "serde", "wrap_log"] }
+aviutl2-eframe = "=0.43.0"
+openmediatransport = { git = "https://github.com/MikanseiLaboratory/openmediatransport-rs", rev = "55ffd08ab899f8017056886157fb0d130ab36d5c" }
+serde = { version = "1", features = ["derive"] }
+tracing = "0.1"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

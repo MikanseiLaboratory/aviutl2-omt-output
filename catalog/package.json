@@ -1,0 +1,102 @@
+{
+  "id": "MikanseiLaboratory.aviutl2-omt-output",
+  "name": "AviUtl2 OMT Live Output",
+  "type": "汎用プラグイン",
+  "summary": "OMT送出プラグイン",
+  "description": "./md/MikanseiLaboratory.aviutl2-omt-output.md",
+  "author": "未完成成果物研究所",
+  "repoURL": "https://github.com/MikanseiLaboratory/aviutl2-omt-output",
+  "latest-version": "v0.1.0",
+  "licenses": [
+    {
+      "type": "MIT",
+      "isCustom": false,
+      "copyrights": [
+        {
+          "years": "2026",
+          "holder": "未完成成果物研究所"
+        }
+      ],
+      "licenseBody": null
+    }
+  ],
+  "tags": [
+    "配信",
+    "OMT"
+  ],
+  "dependencies": [],
+  "images": [
+    {
+      "thumbnail": "./image/MikanseiLaboratory.aviutl2-omt-output_thumbnail.png"
+    }
+  ],
+  "installer": {
+    "source": {
+      "github": {
+        "owner": "MikanseiLaboratory",
+        "repo": "aviutl2-omt-output",
+        "pattern": "^aviutl2-omt-output-v.*\\.au2pkg\\.zip$"
+      }
+    },
+    "install": [
+      {
+        "action": "download"
+      },
+      {
+        "action": "extract"
+      },
+      {
+        "action": "copy",
+        "from": "{tmp}/Plugin",
+        "to": "{dataDir}/Plugin"
+      },
+      {
+        "action": "copy",
+        "from": "{tmp}/Language",
+        "to": "{dataDir}/Language"
+      }
+    ],
+    "uninstall": [
+      {
+        "action": "delete",
+        "path": "{dataDir}/Plugin/aviutl2_omt_live_output.aux2"
+      },
+      {
+        "action": "delete",
+        "path": "{dataDir}/Plugin/aviutl2_omt_live_output.auf2"
+      },
+      {
+        "action": "delete",
+        "path": "{dataDir}/Plugin/aviutl2_omt_live_output/LICENSE"
+      },
+      {
+        "action": "delete",
+        "path": "{dataDir}/Plugin/aviutl2_omt_live_output/THIRD_PARTY_NOTICES.md"
+      },
+      {
+        "action": "delete",
+        "path": "{dataDir}/Plugin/aviutl2_omt_live_output/README.md"
+      },
+      {
+        "action": "delete",
+        "path": "{dataDir}/Language/English.aviutl2_omt_live_output.aul2"
+      },
+      {
+        "action": "delete",
+        "path": "{dataDir}/Language/Japanese.aviutl2_omt_live_output.aul2"
+      }
+    ]
+  },
+  "version": [
+    {
+      "version": "v0.1.0",
+      "release_date": "2026-08-16",
+      "file": [
+        {
+          "path": "{dataDir}/Plugin/aviutl2_omt_live_output.aux2",
+          "XXH3_128": "REPLACE_AFTER_GITHUB_RELEASE"
+        }
+      ]
+    }
+  ]
+}
