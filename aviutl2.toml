@@ -1,0 +1,54 @@
+[project]
+id = "aviutl2-omt-output"
+name = "AviUtl2 OMT Live Output"
+version = "0.1.0"
+
+[artifacts.plugin]
+destination = "Plugin/aviutl2_omt_live_output.aux2"
+placement_method = "copy"
+
+[artifacts.plugin.profiles.debug]
+build = "cargo build --locked --target x86_64-pc-windows-msvc"
+source = "target/x86_64-pc-windows-msvc/debug/aviutl2_omt_live_output.dll"
+
+[artifacts.plugin.profiles.release]
+build = "cargo build --release --locked --target x86_64-pc-windows-msvc"
+source = "target/x86_64-pc-windows-msvc/release/aviutl2_omt_live_output.dll"
+
+[artifacts.english]
+source = "i18n/English.aviutl2_omt_live_output.aul2"
+destination = "Language/English.aviutl2_omt_live_output.aul2"
+
+[artifacts.japanese]
+source = "i18n/Japanese.aviutl2_omt_live_output.aul2"
+destination = "Language/Japanese.aviutl2_omt_live_output.aul2"
+
+[artifacts.license]
+source = "LICENSE"
+destination = "Plugin/aviutl2_omt_live_output/LICENSE"
+
+[artifacts.notices]
+source = "THIRD_PARTY_NOTICES.md"
+destination = "Plugin/aviutl2_omt_live_output/THIRD_PARTY_NOTICES.md"
+
+[artifacts.readme]
+source = "README.md"
+destination = "Plugin/aviutl2_omt_live_output/README.md"
+
+[development]
+aviutl2_version = "2.1.4"
+profile = "debug"
+
+[release]
+package_id = "aviutl2-omt-output"
+package_name = "AviUtl2 OMT Live Output"
+package_information = "AviUtl2 OMT Live Output v{version} / 未完成成果物研究所"
+zip_name = "{id}-v{version}"
+profile = "release"
+include = ["plugin", "english", "japanese", "license", "notices", "readme"]
+
+[catalog]
+id = "MikanseiLaboratory.OMTPlugin"
+description_path = "catalog/md/MikanseiLaboratory.OMTPlugin.md"
+license_path = "LICENSE"
+download_repo = { owner = "MikanseiLaboratory", repo = "aviutl2-omt-output" }
