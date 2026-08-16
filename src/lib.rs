@@ -42,7 +42,7 @@ impl aviutl2::generic::GenericPlugin for OmtLivePlugin {
         aviutl2::generic::GenericPluginTable {
             name: PLUGIN_DISPLAY_NAME.to_string(),
             information: format!(
-                "シーンを描画して OMT でキュー送出 / {PLUGIN_AUTHOR_JA} / v{version}",
+                "今開いているシーンを OMT で送出 / {PLUGIN_AUTHOR_JA} / v{version}",
                 version = env!("CARGO_PKG_VERSION")
             ),
         }

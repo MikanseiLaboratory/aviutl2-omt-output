@@ -11,7 +11,8 @@ pub const MIN_QUEUE_DEPTH: usize = 1;
 pub const MAX_QUEUE_DEPTH: usize = 16;
 pub const MAX_SOURCE_NAME_LEN: usize = 63;
 pub const MAX_PREVIEW_WIDTH: u32 = 320;
-pub const SCENE_HINT: &str = "AviUtl2 側で出したいシーンを開いてから描画開始してください。ベイク中はそのシーンを編集しないでください。";
+pub const SCENE_HINT: &str =
+    "出したいシーンを開いてから描画開始してください。描画中はそのシーンを編集しないでください。";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize)]
 pub enum QualitySetting {

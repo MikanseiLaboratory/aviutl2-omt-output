@@ -19,9 +19,9 @@ impl Transport {
         match self {
             Self::Idle => "待機",
             Self::Baking => "描画中",
-            Self::HoldFirst => "先頭ホールド",
+            Self::HoldFirst => "先頭を送出中",
             Self::Playing => "再生中",
-            Self::HoldLast => "最終ホールド",
+            Self::HoldLast => "最後のフレームを送出中",
         }
     }
 }

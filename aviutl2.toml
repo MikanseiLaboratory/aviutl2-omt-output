@@ -48,7 +48,7 @@ profile = "release"
 include = ["plugin", "english", "japanese", "license", "notices", "readme"]
 
 [catalog]
-id = "MikanseiLaboratory.aviutl2-omt-output"
-description_path = "catalog/md/MikanseiLaboratory.aviutl2-omt-output.md"
+id = "MikanseiLaboratory.OMTPlugin"
+description_path = "catalog/md/MikanseiLaboratory.OMTPlugin.md"
 license_path = "LICENSE"
 download_repo = { owner = "MikanseiLaboratory", repo = "aviutl2-omt-output" }
