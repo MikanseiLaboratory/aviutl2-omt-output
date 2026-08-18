@@ -2,6 +2,7 @@ use std::panic::AssertUnwindSafe;
 use std::sync::Arc;
 
 use aviutl2::AnyResult;
+use aviutl2::tracing_subscriber::prelude::*;
 
 use crate::config::{
     PLUGIN_AUTHOR_EN, PLUGIN_AUTHOR_JA, PLUGIN_DISPLAY_NAME, PROJECT_CONFIG_KEY, PluginConfig,
@@ -12,6 +13,7 @@ pub mod bake;
 pub mod config;
 pub mod controller;
 pub mod media;
+mod omt_file_log;
 pub mod player;
 pub mod sender;
 mod ui;
@@ -96,15 +98,72 @@ fn request_ui_repaint(window: &aviutl2_eframe::EframeWindow) {
 }
 
 fn init_logging() {
-    let _ = aviutl2::tracing_subscriber::fmt()
-        .with_max_level(if cfg!(debug_assertions) {
-            tracing::Level::DEBUG
-        } else {
-            tracing::Level::INFO
-        })
-        .event_format(aviutl2::logger::AviUtl2Formatter)
-        .with_writer(aviutl2::logger::AviUtl2LogWriter)
+    omt_file_log::init();
+    let max_level = if cfg!(debug_assertions) {
+        tracing::Level::DEBUG
+    } else {
+        tracing::Level::INFO
+    };
+    let _ = aviutl2::tracing_subscriber::registry()
+        .with(
+            aviutl2::tracing_subscriber::fmt::layer()
+                .event_format(aviutl2::logger::AviUtl2Formatter)
+                .with_writer(aviutl2::logger::AviUtl2LogWriter)
+                .with_filter(
+                    aviutl2::tracing_subscriber::filter::LevelFilter::from_level(max_level),
+                ),
+        )
+        .with(OmtFileLayer)
         .try_init();
+}
+
+struct OmtFileLayer;
+
+impl<S> aviutl2::tracing_subscriber::layer::Layer<S> for OmtFileLayer
+where
+    S: tracing::Subscriber,
+{
+    fn on_event(
+        &self,
+        event: &tracing::Event<'_>,
+        _ctx: aviutl2::tracing_subscriber::layer::Context<'_, S>,
+    ) {
+        let mut message = String::new();
+        event.record(&mut MessageVisitor(&mut message));
+        if message.is_empty() {
+            message.push_str(event.metadata().name());
+        }
+        omt_file_log::write(&message, event.metadata().target());
+    }
+}
+
+struct MessageVisitor<'a>(&'a mut String);
+
+impl tracing::field::Visit for MessageVisitor<'_> {
+    fn record_debug(&mut self, field: &tracing::field::Field, value: &dyn std::fmt::Debug) {
+        use std::fmt::Write;
+        if !self.0.is_empty() {
+            self.0.push(' ');
+        }
+        if field.name() == "message" {
+            let _ = write!(self.0, "{value:?}");
+        } else {
+            let _ = write!(self.0, "{}={value:?}", field.name());
+        }
+    }
+
+    fn record_str(&mut self, field: &tracing::field::Field, value: &str) {
+        if !self.0.is_empty() {
+            self.0.push(' ');
+        }
+        if field.name() == "message" {
+            self.0.push_str(value);
+        } else {
+            self.0.push_str(field.name());
+            self.0.push('=');
+            self.0.push_str(value);
+        }
+    }
 }
 
 aviutl2::register_generic_plugin!(OmtLivePlugin);
